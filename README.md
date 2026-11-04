@@ -113,7 +113,7 @@ Anota el measurement y el field de **tu** serie: los necesitas en la Fase 1.
 > **Recuerda:** InfluxDB guarda las horas en **UTC**. Colombia está en UTC−5: las 15:00 UTC son las 10:00 a. m. en Colombia.
 
 **✅ Checklist Fase 1**
-- [ ] Anotaste el MAE de tu SARIMA y el de la línea base ingenua (sección 5). Si tu SARIMA no gana, no pasa nada: lo cuentas en el video.
+- [ ] La sección 5 muestra el MAE de tu SARIMA y el de la línea base ingenua (si tu SARIMA no gana, no pasa nada).
 - [ ] La verificación de la sección 6 dice `Diferencia máxima API vs. modelo original: 0.0`.
 - [ ] `models/sarima_config.json` y el notebook ejecutado están en tu repo.
 
@@ -219,7 +219,7 @@ Crea un archivo llamado `Dockerfile`, sin extensión, **en la raíz del reposito
 5. **Exponer** el puerto 8000.
 6. Definir el **comando de arranque**: `uvicorn` sirviendo `app.main:app` en el host `0.0.0.0` y el puerto `8000`.
 
-Piensa en estas dos preguntas, porque las responderás en tu video:
+Antes de escribirlo, piensa en estas dos preguntas:
 - ¿Por qué se copia `requirements.txt` **antes** que el resto del código?
 - ¿Por qué el host debe ser `0.0.0.0` y no `127.0.0.1` dentro de un contenedor?
 
@@ -227,7 +227,7 @@ Piensa en estas dos preguntas, porque las responderás en tu video:
 
 Crea `.dockerignore` en la raíz. Su trabajo es impedir que entren a la imagen archivos que no deben estar ahí. Como mínimo, el `.env` (credenciales), la carpeta `.git`, los notebooks y las cachés de Python (`__pycache__`).
 
-> **Pruébalo:** tu Dockerfile copia carpeta por carpeta, así que el `.env` no entraría aunque no tuvieras `.dockerignore`. Cambia temporalmente los `COPY` por un solo `COPY . .`, construye y ejecuta `docker run --rm pronostico ls -a /app` con y sin `.dockerignore`. ¿Qué cambia? Lo responderás en tu video.
+> **Pruébalo:** tu Dockerfile copia carpeta por carpeta, así que el `.env` no entraría aunque no tuvieras `.dockerignore`. Cambia temporalmente los `COPY` por un solo `COPY . .`, construye y ejecuta `docker run --rm pronostico ls -a /app` con y sin `.dockerignore`. ¿Qué cambia?
 
 ### 4.3 Construye la imagen
 
@@ -294,18 +294,14 @@ En tu repositorio de GitHub:
 4. `Dockerfile` y `.dockerignore`.
 5. Una sección **Video** al inicio de este README con el enlace a tu video.
 
-### El video (máximo 10 minutos)
+### El video (máximo 5 minutos)
 
-Reemplaza la sustentación en vivo. Sigue estas escenas, en orden:
+Reemplaza la sustentación en vivo. Muestra tu app funcionando de las dos formas:
 
-1. **Presentación (0:30):** integrantes y la variable que pronostican.
-2. **El modelo (0:45):** el modelo ganador y la tabla de MAE frente a la línea base ingenua.
-3. **Sin Docker (2:00):** ejecuta `git log -1 --oneline`, luego `uvicorn` con datos reales, tu frontend, un error provocado y `/api/salud`.
-4. **Con Docker (3:00):** tu Dockerfile, `docker build`, `docker run`, y en una sola toma `docker ps` junto a `/api/salud`. Cierra con los dos comandos que verifican que la imagen no tiene credenciales.
-5. **Preguntas (2:00):** por qué `requirements.txt` se copia primero, por qué `0.0.0.0` y para qué sirve el `.dockerignore`.
-6. **Cierre (1:00):** qué fue lo más difícil y cómo lo resolvieron.
+1. **Sin Docker:** ejecuta `uvicorn app.main:app --host 0.0.0.0 --port 8000`, abre tu frontend con datos reales, cambia las horas a pronosticar y abre `/api/salud` (debe decir `"modelo_demo": false`).
+2. **Con Docker:** ejecuta `docker build` y `docker run` con los `-e`, abre tu frontend, y muestra `docker ps` junto a `/api/salud`: el CONTAINER ID debe coincidir con `atendido_por`.
 
-Reglas: todos los integrantes hablan, se ve `modelo_demo: false`, no hay cortes dentro de una evidencia y el texto se lee (mínimo 720p). Sube el video a YouTube como *no listado* o a Google Drive con acceso para el profesor.
+Reglas: nunca muestres el token; la terminal y el navegador deben leerse bien; súbelo a YouTube como *no listado* o a Google Drive con acceso para el profesor.
 
 > ⚠️ Si tu token aparece en el repositorio, en el historial de commits, dentro de la imagen o en el video, se descuenta de la nota.
 
