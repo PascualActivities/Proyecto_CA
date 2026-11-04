@@ -99,7 +99,7 @@ Anota el measurement y el field de **tu** serie: los necesitas en la Fase 1.
 1. En Colab: **Archivo → Abrir notebook → pestaña GitHub** → tu repositorio → `notebooks/entrenamiento_sarima_colab.ipynb`.
 2. En **Secrets** (🔑) crea `INFLUX_URL`, `INFLUX_TOKEN`, `INFLUX_ORG` e `INFLUX_BUCKET`, y activa **Acceso al notebook** en cada uno.
 3. En la celda **0. Configuración** escribe tu `MEASUREMENT` y tu `FIELD`.
-4. Ejecuta las celdas **en orden**, una por una, y lee lo que muestra cada una. Responde las preguntas de las celdas **📝 Para tu entrega**.
+4. Ejecuta las celdas **en orden**, una por una, y lee lo que muestra cada una. El notebook elige solo el mejor modelo.
 5. Descarga `sarima_config.json` (sección 6, opción A), arrástralo a la carpeta `models/` del Codespace y súbelo:
 
    ```bash
@@ -113,7 +113,7 @@ Anota el measurement y el field de **tu** serie: los necesitas en la Fase 1.
 > **Recuerda:** InfluxDB guarda las horas en **UTC**. Colombia está en UTC−5: las 15:00 UTC son las 10:00 a. m. en Colombia.
 
 **✅ Checklist Fase 1**
-- [ ] Tu SARIMA tiene menor MAE que la línea base ingenua.
+- [ ] Anotaste el MAE de tu SARIMA y el de la línea base ingenua (sección 5). Si tu SARIMA no gana, no pasa nada: lo cuentas en el video.
 - [ ] La verificación de la sección 6 dice `Diferencia máxima API vs. modelo original: 0.0`.
 - [ ] `models/sarima_config.json` y el notebook ejecutado están en tu repo.
 
@@ -219,7 +219,7 @@ Crea un archivo llamado `Dockerfile`, sin extensión, **en la raíz del reposito
 5. **Exponer** el puerto 8000.
 6. Definir el **comando de arranque**: `uvicorn` sirviendo `app.main:app` en el host `0.0.0.0` y el puerto `8000`.
 
-Piensa en estas dos preguntas, porque te las harán en la sustentación:
+Piensa en estas dos preguntas, porque las responderás en tu video:
 - ¿Por qué se copia `requirements.txt` **antes** que el resto del código?
 - ¿Por qué el host debe ser `0.0.0.0` y no `127.0.0.1` dentro de un contenedor?
 
@@ -227,7 +227,7 @@ Piensa en estas dos preguntas, porque te las harán en la sustentación:
 
 Crea `.dockerignore` en la raíz. Su trabajo es impedir que entren a la imagen archivos que no deben estar ahí. Como mínimo, el `.env` (credenciales), la carpeta `.git`, los notebooks y las cachés de Python (`__pycache__`).
 
-> **Pruébalo:** tu Dockerfile copia carpeta por carpeta, así que el `.env` no entraría aunque no tuvieras `.dockerignore`. Cambia temporalmente los `COPY` por un solo `COPY . .`, construye y ejecuta `docker run --rm pronostico ls -a /app` con y sin `.dockerignore`. ¿Qué cambia? Te lo preguntarán en la sustentación.
+> **Pruébalo:** tu Dockerfile copia carpeta por carpeta, así que el `.env` no entraría aunque no tuvieras `.dockerignore`. Cambia temporalmente los `COPY` por un solo `COPY . .`, construye y ejecuta `docker run --rm pronostico ls -a /app` con y sin `.dockerignore`. ¿Qué cambia? Lo responderás en tu video.
 
 ### 4.3 Construye la imagen
 
@@ -289,13 +289,25 @@ git push
 En tu repositorio de GitHub:
 
 1. `models/sarima_config.json`: tu modelo.
-2. `notebooks/entrenamiento_sarima_colab.ipynb`: ejecutado, con tus respuestas a las preguntas **📝 Para tu entrega**.
+2. `notebooks/entrenamiento_sarima_colab.ipynb`: ejecutado completo.
 3. `frontend/index.html`, y tus archivos `.css` o `.js` si los usaste.
 4. `Dockerfile` y `.dockerignore`.
+5. Una sección **Video** al inicio de este README con el enlace a tu video.
 
-En la sustentación: demostración en vivo de las fases 3 y 4.
+### El video (máximo 10 minutos)
 
-> ⚠️ Si tu token aparece en el repositorio, en el historial de commits o dentro de la imagen, se descuenta de la nota.
+Reemplaza la sustentación en vivo. Sigue estas escenas, en orden:
+
+1. **Presentación (0:30):** integrantes y la variable que pronostican.
+2. **El modelo (0:45):** el modelo ganador y la tabla de MAE frente a la línea base ingenua.
+3. **Sin Docker (2:00):** ejecuta `git log -1 --oneline`, luego `uvicorn` con datos reales, tu frontend, un error provocado y `/api/salud`.
+4. **Con Docker (3:00):** tu Dockerfile, `docker build`, `docker run`, y en una sola toma `docker ps` junto a `/api/salud`. Cierra con los dos comandos que verifican que la imagen no tiene credenciales.
+5. **Preguntas (2:00):** por qué `requirements.txt` se copia primero, por qué `0.0.0.0` y para qué sirve el `.dockerignore`.
+6. **Cierre (1:00):** qué fue lo más difícil y cómo lo resolvieron.
+
+Reglas: todos los integrantes hablan, se ve `modelo_demo: false`, no hay cortes dentro de una evidencia y el texto se lee (mínimo 720p). Sube el video a YouTube como *no listado* o a Google Drive con acceso para el profesor.
+
+> ⚠️ Si tu token aparece en el repositorio, en el historial de commits, dentro de la imagen o en el video, se descuenta de la nota.
 
 ---
 
