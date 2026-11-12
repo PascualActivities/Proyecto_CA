@@ -1,0 +1,21 @@
+# Git y control de versiones
+.git
+.gitignore
+
+# Entornos y credenciales
+.env
+.venv
+venv/
+ENV/
+
+# Cachés de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.pytest_cache/
+.mypy_cache/
+
+# Jupyter Notebooks
+*.ipynb
+.ipynb_checkpoints/
